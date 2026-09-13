@@ -1,0 +1,75 @@
+name: Release
+on:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/release.yml'
+      - '*.gemspec'
+  workflow_dispatch:
+
+env:
+  # SDK identity is baked in at generation time, so the workflow never reads it from files at runtime.
+  SDK_VERSION: '2.0.7'
+  SDK_PACKAGE_NAME: 'celitech'
+  RELEASE_TAG: 'v2.0.7'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create tag if it does not exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ env.RELEASE_TAG }}
+        run: |
+          if gh api "repos/${{ github.repository }}/git/refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::notice::Tag $TAG already exists, nothing to do"
+            exit 0
+          fi
+          gh api -X POST "repos/${{ github.repository }}/git/refs" \
+            -f ref="refs/tags/$TAG" \
+            -f sha="${{ github.sha }}"
+          echo "::notice::Created tag $TAG at ${{ github.sha }}"
+      - name: Check required publishing secrets
+        id: secrets
+        # Publishing is enabled by default. Secrets cannot be referenced in a
+        # step-level `if:`, so read them into env here and skip the publish steps
+        # (succeeding, not failing) when a required secret is unset or empty.
+        env:
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          if [ -n "$RUBYGEMS_API_KEY" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::RUBYGEMS_API_KEY is not set; skipping RubyGems publishing."
+          fi
+      - uses: ruby/setup-ruby@v1
+        if: steps.secrets.outputs.ok == 'true'
+        with:
+          ruby-version: '3.3'
+      - name: Publish to RubyGems
+        if: steps.secrets.outputs.ok == 'true'
+        run: |
+          gem build *.gemspec
+          if curl -sf "https://rubygems.org/api/v1/versions/${SDK_PACKAGE_NAME}.json" | grep -q "\"number\":\"${SDK_VERSION}\""; then
+            echo "::notice::Version $SDK_VERSION already published, skipping."
+          else
+            gem push *.gem
+          fi
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+      - name: Create GitHub release
+        if: steps.secrets.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ env.RELEASE_TAG }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::notice::Release $TAG already exists"
+          else
+            gh release create "$TAG" --title "$TAG" --generate-notes
+          fi
