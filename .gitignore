@@ -1,0 +1,25 @@
+*.gem
+
+# Bundler
+/.bundle/
+/vendor/bundle
+/Gemfile.lock
+
+# Ruby compiled files
+*.rbc
+
+# Coverage reports
+/coverage/
+
+# Build artifacts
+/pkg/
+
+# Environment variables
+/.env*
+
+# Devcontainer
+/.devcontainer/
+
+# OS generated files
+.DS_Store
+Thumbs.db
