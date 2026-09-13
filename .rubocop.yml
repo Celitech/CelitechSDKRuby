@@ -1,0 +1,88 @@
+# .rubocop.yml
+plugins:
+  - rubocop-minitest
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'vendor/**/*'
+    - '**/*.gemspec'
+
+# Ignore line length for now as we cannot control
+# how long certain parameter strings can be
+Layout/LineLength:
+  Enabled: false
+
+# Generated guard clauses do not emit a trailing blank line after the guard
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+# Generated code uses API-derived names which may include numbers; normalcase is too strict
+Naming/VariableNumber:
+  Enabled: false
+
+# Generated code uses API-spec parameter names which are often short (e.g. 'q', 'id')
+Naming/MethodParameterName:
+  Enabled: false
+
+# API-spec-derived method names such as get_pet or set_status are valid in generated code
+Naming/AccessorMethodName:
+  Enabled: false
+
+# Named block parameters (&block) are more readable than anonymous forwarding (&) in generated code
+Naming/BlockForwarding:
+  Enabled: false
+
+# GET/DELETE methods may declare a body param from the spec but not use it in the HTTP call
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+# Digit-starting identifiers get an _ prefix which may still be referenced in URLs
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+# Single quotes are the Ruby gem convention
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+# Avoid forcing frozen_string_literal on every file
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Document your public API if you want, but don't enforce it
+Style/Documentation:
+  Enabled: false
+
+# The (...) shorthand for forwarding all arguments is a Ruby 3.0+ feature; explicit parameters are clearer here
+Style/ArgumentsForwarding:
+  Enabled: false
+
+# Generated error constructors use keyword arguments, incompatible with the two-arg raise form
+Style/RaiseArgs:
+  Enabled: false
+
+# Disable metrics
+Metrics:
+  Enabled: false
+
+# Generated code may have empty model classes (no properties defined in spec)
+Lint/EmptyClass:
+  Enabled: false
+
+# Method names like `is_active` are valid for generated code (API-spec derived)
+Naming/PredicatePrefix:
+  Enabled: false
+
+# Trailing commas in multi-line literals and calls reduce diff noise when
+# properties are added or reordered
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
