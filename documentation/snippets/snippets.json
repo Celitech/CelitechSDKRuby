@@ -1,0 +1,43 @@
+{
+  "endpoints": {
+    "/destinations": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.destinations.list_destinations\n\nputs response\n"
+    },
+    "/packages": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.packages.list_packages\n\nputs response\n"
+    },
+    "/purchases/v2": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.create_purchase_v2(body: { 'destination' => 'FRA', 'dataLimitInGB' => 1, 'quantity' => 1 })\n\nputs response\n"
+    },
+    "/purchases": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.list_purchases\n\nputs response\n",
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.create_purchase(body: { 'destination' => 'FRA', 'dataLimitInGB' => 1, 'startDate' => '2023-11-01', 'endDate' => '2023-11-20' })\n\nputs response\n"
+    },
+    "/purchases/topup": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.top_up_esim(body: { 'iccid' => '1111222233334444555000', 'dataLimitInGB' => 1 })\n\nputs response\n"
+    },
+    "/purchases/edit": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.edit_purchase(body: { 'purchaseId' => 'ae471106-c8b4-42cf-b83a-b061291f2922', 'startDate' => '2023-11-01', 'endDate' => '2023-11-20' })\n\nputs response\n"
+    },
+    "/purchases/{purchaseId}/consumption": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.purchases.get_purchase_consumption(purchase_id: '4973fa15-6979-4daa-9cf3-672620df819c')\n\nputs response\n"
+    },
+    "/esim": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.e_sim.get_esim(iccid: '1111222233334444555000')\n\nputs response\n"
+    },
+    "/esim/{iccid}/device": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.e_sim.get_esim_device(iccid: '1111222233334444555000')\n\nputs response\n"
+    },
+    "/esim/{iccid}/history": {
+      "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.e_sim.get_esim_history(iccid: '1111222233334444555000')\n\nputs response\n"
+    },
+    "/iframe/token": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.i_frame.token\n\nputs response\n"
+    },
+    "/oauth2/token": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.o_auth.get_access_token(body: { 'grant_type' => 'client_credentials', 'client_id' => 'your_client_id', 'client_secret' => 'your_client_secret', 'scope' => 'read write' })\n\nputs response\n"
+    }
+  },
+  "example": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.destinations.list_destinations\n\nputs response\n",
+  "authentication": {}
+}
