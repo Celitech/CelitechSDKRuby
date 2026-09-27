@@ -151,7 +151,8 @@ module Celitech
     def get_purchase_consumption(purchase_id:, config: NO_OVERRIDE)
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       conn = resolve_connection(config)
-      response = conn.get("/purchases/#{purchase_id}/consumption", {}, headers)
+      url = "/purchases/#{Serializers::Params.simple(purchase_id, explode: false)}/consumption"
+      response = conn.get(url, {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetPurchaseConsumptionOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
