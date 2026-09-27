@@ -1,13 +1,13 @@
 {
-  "sdkGenVersion": "2.6.0",
-  "resolvedGeneratorVersion": "2.6.0",
-  "date": "2026-09-13T19:12:56.216Z",
+  "sdkGenVersion": "2.10.0",
+  "resolvedGeneratorVersion": "2.10.0",
+  "date": "2026-09-27T16:16:22.833Z",
   "config": {
     "schemaVersion": "sdk-config-ir/v1",
     "source": {
       "specs": [
         {
-          "specUrl": "https://us-prod-sdk-gen-api-specs.s3.us-east-1.amazonaws.com/specification-snapshots/384c4a61-72fc-4d28-ba6b-2691f6d6ec91/1789326775473.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LJBU7FAMOMRBY%2F20260913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260913T191255Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAsaCXVzLWVhc3QtMSJHMEUCIGy7qJVyHC5ejaN23cMdBOCXLyEafqj5328xN9Ht2otVAiEAyVNCZJduQlXdMGTw2pHYsiUCwVK8d61V2Fh6k9bul7MqnAUI0%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjM2NTIxNTgiDAuMqgMp14WDwISUmSrwBFELTq1HgDZet5Djoift5WpoD9ph0KbJUPBQUkPTc7hBqXYfjl16B4HWykObQA%2BVWBw3RjR%2BS5%2BsSAtt7P5hmkQJB588Xvlf7AhqdgNcT%2FsiLtMs%2FFYNpT%2BgeuY4%2FBgxtJqLVu9cJxvCo8TMBHIWf%2Fb7JyiBXyM%2BmvMFwnGkGDeloGayt4KfQtLcdBSjhw35%2B4%2BEMROHUkmMzAMw4JvY%2FNa%2FKThIaSnw7jUSKI%2F1zTNhjlXvSQ8I%2BgVmHrdaCb6nCp8hFX%2FXWvccJReHsKYJ2bG%2BCv1hc2OL5JK9OkTeqz1GmQ%2F0HoRzcSHF97K9BsmSDqfdB6vaGaST5jZsQ5DuicKBc0F4jmmRnEUeEbqzUI8%2FLEBW4LOORY33ldwOjq0OApo3kppMaJd%2FX2s%2FjzPpu5xr283ROLUxAN68O36hr2zZbyrrLGE4ahmCe9a5o2BnePpccwY6qAiXnfmGWua7kU8uhwdV3upaqQPOOy3P7iwB0rO34GQMUAmQetm6CGOb4YqZqHo0Ao8mIo2I8SZ4SyyZl1BqeT37IZKSpODovL5jMg2abyRZsF07d1LQ64rccRtfJXwvx0nDvQOERgMxV8OETbnyV0aB2XPVpBsiOr1e6O0CK9alkrnZe8WGj4GtkQ4AWQsdRt%2BMTl5eNtwrGKgNZx24kKdE0kDZWSNxctn0pdhqzAPHYF12jt38PhQAARdjYC%2Fd3BKPCoktXRS3P910qVYM4MX0qTj3rfVwKyyoo51JIRcGJ1VYT87OrOBbfShtsdL7%2BhMpzBjJZlwP%2FQzVxnz9i30Np0Kn6oP0xvC0VPBsUHVx%2FbtwLU4PVVBsHDC%2F1ZvVBjqZAT7MToTaFZtHUj7xtHXsbBCFCpTzYYwYvLJBDMkm3d2XfQkx8n7xyN69Lz6lxdsnbIV1vX8TSVKRUPgiF%2FAxwfK6389vWK0E1mHK72AaBSct6lZ%2BjNmE7AN9k7Tsa4G4Y%2F42DkglSZ2gDpBEeD4JXDWupSQms3x5JV196a8n199s8ldHvA2fmoUaNl8b%2BoQ9XUtpoqZgPossgg%3D%3D&X-Amz-Signature=711e3548f8703d65f9a63bf134e6c03ca01ff745ac1ed3bbb19e866c4d2f2fae&X-Amz-SignedHeaders=host&x-id=GetObject",
+          "specUrl": "https://us-prod-sdk-gen-api-specs.s3.us-east-1.amazonaws.com/specification-snapshots/2b1e093c-f28e-4f3f-9ce2-7d976fa0ceaa/1790525782088.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LJBU7F24C5S6Q%2F20260927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260927T161622Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFgaCXVzLWVhc3QtMSJGMEQCIDOwTZgoDjKL5q%2BSVSo0LR4GvLRY6vaisKTllAQoQkBCAiAzGAq3Jz%2F5MHEi2P7Bg1oe7sB0SPw3L2wJnu4Dh%2FnUPiqTBQggEAAaDDYzNzQyMzY1MjE1OCIMsdZwfT3E%2BncUvYRNKvAE9LdCebdSikaTnNmUXOOf%2BX2iinxad2Oo%2B6zkPZMz%2B4NqA5I%2BC9Q3Y1K75BvmS5HtwrTTH3WndOiApmDmxUqY8QYb6aIM73vUD2WmN10TlecIgM5xZyYTTKzXn7w5lixoKESeq1VCA3IxnJwq8pz1Dm5G0sktD3r2qhSnpt67nvn9Nu%2BKehwpBjs9HWP3hXDgRvOyPYlsXPywfFY0pZtpMo2vx%2FSLw7cDcTp8NkI5COzSgolyxcVOaI0lh28W5D4y4uEeL0s1k6eEBtDejnQYqbDSHDVuqLSGlAalU1xSYF2V4FosqNENlBtrgF%2BOq7MIY8Upbqj3L9GcjsK0u4L7VF14hZ15TiJjFX7fWhCxf8MlveFkZOZ2cIJOi%2FbRmP%2BkvWLzccZnprGP3pdszvjE0XeK1ZAul02RTVqiq1NGIPKGSUKildJJtgAuk2nzrqkPM10MtOWDynO66cbV0iSyaFNUU3hRUyo3Zy1P1RPvgYv2UJz4Igx7EExnGdBbXU3KIH%2F59TrBwuNo1pDC7gbyDzO%2BcgyhI5FkB0lUnPqZgLMvZAUFST6Aumix6JRCAg7vQdHJL%2FW31EweRVi0NqzNpCHrF5akNoyY9Wan6cX93oIEwHm7jKOztN5DbpL1WlWk4xrP889roTdkUxr9El5Vo5hBdlVJ9EMzooRj%2FYMDdKv6Din8lXdMAGFNPOAG491%2Fa6y9Ovg%2F%2Fz0vlwmJV897B6nyTbyLvoE55z%2FvocM%2BfHDU421AhaCYe5%2BkLsoccESoEBmC%2Fbli5%2BUCPNu19HJMf8vJa%2FyncD7dt1IBuctnbyNsQrWeo5hGhLNDsucCnUtDMNbu5NUGOpoB%2FI5cyQe0%2Fm5JCfjT0mdoM%2BSYkjwchbbPMWaPLekaOb%2FTDX%2BAKz8X5byiBhz7V691IPwz%2FCk8Ff64f0u0mEfX3irfZLxUXOUTAFuzVJFCnfFPpBIp%2FWuB7JtiTwPCsy5Mg%2FdPlLNfdIEhnBQlz5j7%2FjCwoFo1TcthjU4tAZlZ%2BE3k6AiI1CVqu%2Fw3BpPew2lR5Z0Hmxg3y3Y81Q%3D%3D&X-Amz-Signature=4dbf27eb941ec027b69a866c8c2e36afdaa4f481f2ccd68b9d058142cb062ca2&X-Amz-SignedHeaders=host&x-id=GetObject",
           "specType": "openapi"
         }
       ]
@@ -16,8 +16,8 @@
       "language": "ruby",
       "sourceOrigin": "postman",
       "sdkName": "Celitech",
-      "sdkVersion": "2.0.7",
-      "apiVersion": "2.0.7"
+      "sdkVersion": "2.0.8",
+      "apiVersion": "2.0.8"
     },
     "api": {
       "baseUrl": "",
@@ -143,9 +143,10 @@
     "lib/celitech/services/o_auth.rb",
     "celitech.gemspec",
     "Gemfile",
+    "Rakefile",
     ".ruby-version",
     ".rubocop.yml",
-    ".github/workflows/release.yml",
+    ".github/workflows/ci.yml",
     "lib/celitech/version.rb",
     "lib/celitech.rb",
     "lib/celitech/error.rb",
@@ -155,6 +156,7 @@
     "lib/celitech/models/open_model.rb",
     "lib/celitech/serializers/json_serializer.rb",
     "lib/celitech/serializers/form_serializer.rb",
+    "lib/celitech/serializers/params_serializer.rb",
     "lib/celitech/http/connection.rb",
     "lib/celitech/http/response.rb",
     "lib/celitech/http/hooks.rb",
@@ -196,13 +198,14 @@
   ],
   "fileHashes": {
     ".devcontainer/devcontainer.json": "6bc9695b2711bf4c991727b199706b343bfd7bd9b3e4276397624fbeb2913f86",
-    ".github/workflows/release.yml": "58ba42400fb801af50543f5c213f972ddbfdba3b7037610cccc18e72400842f3",
+    ".github/workflows/ci.yml": "6561af13da87d9e3b016943d777991bae96eb640ad6bcc2139a01c28c5377ceb",
     ".gitignore": "bffd1a294bc8ddc7677f88d6ff0cb56551dcef5f791d31f4dbb4e6b601d87366",
-    ".rubocop.yml": "0c9a12f94043517532eb22bd030a98b748c1bc049e737bb513af2ca0df437a35",
+    ".rubocop.yml": "0f1498a3e83f2351eb0e2e2248024ce989cd27852d2ff5336259d6a92a363cc5",
     ".ruby-version": "92946641ce45f0abdac522e48f71b115adf8da98953fb1552ffa0d0a8852d56e",
     "Gemfile": "ed54c37fdd231505e0bc291cab201c234136bfcbdc87bfb522ad309cc41037cf",
-    "README.md": "fd58b01c5f6acda2c8a87f7fb33d506671f755e8f78b29c9ce5c0151615349b4",
-    "celitech.gemspec": "e32871e4bf471d21e03d506a4232877be268b761aa28cc5ded652e11e09b85f2",
+    "README.md": "35dcc87031deb28e2c7c5a6b7a3d86bb005b2084ccbe9105692c343f51efcde3",
+    "Rakefile": "4d036803c18c3e2c384606ffe4fcf21f9213eb8c164b9331caaf664d8bbf998d",
+    "celitech.gemspec": "b48dd4ba8ea5a791abcc53052927a57f85f569274467072cd87dc954486f4051",
     "documentation/models/bad_request.md": "4db8a3a1a7b9dc36e51cccd962ec4b67988ed67013b9fd1eb6c3f3ac3d426143",
     "documentation/models/create_purchase_ok_response.md": "c476c3fe6f7a93f6e946858f834e11a7899bd1deb610e0de30ab5d86de643cc4",
     "documentation/models/create_purchase_request.md": "251045fc08f2c5ef02e2ca58e03a11aa834a9e6f8d8c558fd91dcdefa806e269",
@@ -235,8 +238,8 @@
     "lib/celitech/client.rb": "88248d9f85e59eb4039525cccdea309e76748c98071af95ca7a237be0f51bd23",
     "lib/celitech/config.rb": "dc867472462bd5e3a8865832d8e4053c08a27973f127a43e196c889868fa5514",
     "lib/celitech/environment.rb": "c6941ecac4d51ae63e9cc8e3e72512393d21be57eac32bd3729a25cbf5046804",
-    "lib/celitech/error.rb": "930046a03a83cc76792a9fd12b59c6546d3c290ab7d012aed9bf937a957f6750",
-    "lib/celitech/http/connection.rb": "4bc000baaa53c7e60b7775fbcff14fc65fbd21f241749a4e8c2a6b98a0eba23a",
+    "lib/celitech/error.rb": "fc529389e9b036860c2e558773465ae4baa5c086a829a0fd28dd071b8d3d3e30",
+    "lib/celitech/http/connection.rb": "78731311ee11a5ad29c682165e349796ed9187fef26fcc977b3b13bbb101f1ad",
     "lib/celitech/http/hooks.rb": "3c0129e78604261c0b7890bcab6d8e837ae0e643060004fe07f0c0dcc1b6ab8d",
     "lib/celitech/http/oauth_token_manager.rb": "68c9cc07d30eb35bf6ef0f3ac4b317a81fc1a2ac9fb13ca308b808ca65311eb5",
     "lib/celitech/http/response.rb": "50759889c1bee848cc752829f6d7cb442d5c9c792edac05ad6084e3f33e7fcf5",
@@ -283,15 +286,16 @@
     "lib/celitech/models/union_type.rb": "25b2690968835fa361d5610f3a7a9648422013e6b6f56ff6f9c407c43a2f0b77",
     "lib/celitech/serializers/form_serializer.rb": "fa8f792fc7bca28aedbe8abd6e5da14cc74dad06aa6fdc45d3d703b7b4cab0af",
     "lib/celitech/serializers/json_serializer.rb": "878a572cf02abc75861a4a5a455561571bde6d4995a06ab235e2027aae11d058",
+    "lib/celitech/serializers/params_serializer.rb": "9d99d5dc9550fbfd78a779f245ff84612d8108b88d6e7ad748a03688330bc7b7",
     "lib/celitech/services/destinations.rb": "0ab454c8a31c341f30d6830f13bb92ddcda11da2d2b1238f28bd9653f91df5c4",
-    "lib/celitech/services/e_sim.rb": "a717465abd9ed4377c43ee7f03457935784b1e847a048d31f555f787c3c00229",
+    "lib/celitech/services/e_sim.rb": "1e271a7a456a17e0025e4c21d220acecf7569f54e4cc11efa91539b41be5a663",
     "lib/celitech/services/i_frame.rb": "737d968280b7d5d5e78caf6b1137ca5fdc36fa7b2eb2529290571c923609c499",
     "lib/celitech/services/o_auth.rb": "bded985509c57d56087c8b04deb564462bcb734bdfc1198aa52ba26849a089a9",
     "lib/celitech/services/packages.rb": "56d7d36559761ae4a2a10f30cf97fe6a596b3981a637e45b57c70461b1aa7d58",
-    "lib/celitech/services/purchases.rb": "841dacbec659bad0f7740ee66e3983043582f3e4a9000f99bb759d70d7fe5e7a",
+    "lib/celitech/services/purchases.rb": "9e202977778d1b757737b75e3a562dbf8be20cd34d8c5e52f9cc50497de37d8d",
     "lib/celitech/validator.rb": "7dabe929a97d8b7eb6d911950c8ffee2f3a539e56c2dcd708cdc11ae57fa5005",
-    "lib/celitech/version.rb": "7058d1bcd2e760ce81d55158a0556b023ce321466452c81c9bdc95977369dbd8",
-    "lib/celitech.rb": "eb8ffc0349342f1296abad72931931d12b4e745febec70670e390cefd28061a3",
-    "prettier.config.js": "b3f990b4c84640a705ded29e3343d8e3d70ddc4b88431d10d47c23f568470cfd"
+    "lib/celitech/version.rb": "5edd0c1db9e2d7567a5ab9ae69beeb4a3d9c53694d6de2f40f9fc62d1bce456f",
+    "lib/celitech.rb": "b5064ffc525be28159a0bc6d46a3e8f6c2c79a94807f3718f116ff02c4255a62",
+    "prettier.config.cjs": "b3f990b4c84640a705ded29e3343d8e3d70ddc4b88431d10d47c23f568470cfd"
   }
 }

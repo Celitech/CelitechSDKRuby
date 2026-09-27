@@ -2,12 +2,42 @@
 
 require 'json'
 require 'net/http'
+require 'openssl'
 require 'time'
 require 'uri'
 
 module Celitech
   module HTTP
     class Connection
+      # Failures that mean the request never reached the server. `SocketError` covers DNS
+      # resolution; `EOFError` is the peer closing mid-exchange; `OpenSSL::SSL::SSLError` is a
+      # handshake or certificate failure. Wrapped as `ConnectionError` so a caller does not have to
+      # rescue Net::HTTP's and Socket's own exception classes to handle an unreachable server.
+      CONNECTION_ERRORS = [
+        SocketError,
+        EOFError,
+        Errno::ECONNREFUSED,
+        Errno::ECONNRESET,
+        Errno::ECONNABORTED,
+        Errno::EHOSTUNREACH,
+        Errno::ENETUNREACH,
+        Errno::EPIPE,
+        Errno::ETIMEDOUT,
+        OpenSSL::SSL::SSLError,
+      ].freeze
+
+      # Net::HTTP's three timeout exceptions, all reachable because a configured timeout is applied
+      # as open_timeout, read_timeout AND write_timeout. Deliberately not widened to their shared
+      # parent `Timeout::Error`, which would also swallow an unrelated `Timeout.timeout` block in
+      # caller code. Wrapped as `TimeoutError` for the same reason as CONNECTION_ERRORS above.
+      # `IO::TimeoutError` is the fourth and is NOT a Net::HTTP class: since Ruby 3.2 an expired
+      # connect deadline surfaces from the IO layer, and it descends from IOError rather than
+      # Timeout::Error, so none of the three above catch it and CONNECTION_ERRORS excludes bare
+      # IOError. Without it a timed-out connect escaped unwrapped on ruby 3.3 -- the version the
+      # gemspec floors at and the e2e image runs -- while raising Net::OpenTimeout on 4.x, so it
+      # looked correct locally. No `defined?` guard: the gemspec requires >= 3.3.
+      TIMEOUT_ERRORS = [Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, IO::TimeoutError].freeze
+
       attr_accessor :default_headers
       attr_reader :base_url, :timeout, :retry_config
 
@@ -55,18 +85,21 @@ module Celitech
         # transport (TLS, timeouts, proxy) — the caller owns those settings.
         @custom_http     = !http_client.nil?
         @http            = http_client || Net::HTTP.new(@uri.host, @uri.port)
-        @default_headers = { 'User-Agent' => 'postman-codegen/2.6.0 celitech/2.0.7 (ruby)' }.merge(default_headers)
+        @default_headers = { 'User-Agent' => 'postman-codegen/2.10.0 celitech/2.0.8 (ruby)' }.merge(default_headers)
         @refresh_manager = refresh_manager
         @mutex           = Mutex.new
         @hook            = Hooks.new
         unless @custom_http
           @http.use_ssl = @uri.scheme == 'https'
+          # Guards ABSENCE, not zero: only nil and false are falsy in Ruby, so `timeout: 0` is
+          # truthy and IS applied, and Net::HTTP reads 0 as "fail immediately" (nil, not 0, is its
+          # no-timeout value). An absent timeout leaves Net::HTTP's own defaults in place.
           if timeout
             @http.open_timeout = timeout
             @http.read_timeout = timeout
           end
         end
-        @http.start unless @http.started?
+        start_connection
       end
 
       def get(path, params = {}, headers = {})
@@ -142,8 +175,10 @@ module Celitech
           @hook.on_error(e, req, params)
           raise
         end
-      rescue Net::ReadTimeout, Net::OpenTimeout => e
+      rescue *TIMEOUT_ERRORS => e
         raise TimeoutError, e.message
+      rescue *CONNECTION_ERRORS => e
+        raise ConnectionError, e.message
       end
 
       def stream_execute(req)
@@ -198,8 +233,10 @@ module Celitech
                 end
               end
             end
-          rescue Net::ReadTimeout, Net::OpenTimeout => e
+          rescue *TIMEOUT_ERRORS => e
             raise TimeoutError, e.message
+          rescue *CONNECTION_ERRORS => e
+            raise ConnectionError, e.message
           end
         end
       end
@@ -278,7 +315,23 @@ module Celitech
         rescue StandardError
           nil
         end
-        @http.start
+        start_connection
+      end
+
+      # The connection is opened eagerly (in initialize) and re-opened on a dropped socket, so this
+      # is the other place a connection-level failure can surface — a refused connection used to
+      # escape the constructor as a bare Errno::ECONNREFUSED.
+      #
+      # Timeouts are wrapped here too, and are reachable from the constructor: Net::HTTP reads
+      # `timeout: 0` as "fail immediately", so opening the connection raises before any request is
+      # made. Without this the SDK's own `TimeoutError` was only raised from `execute`, and a
+      # `timeout: 0` client leaked a bare `Net::OpenTimeout` out of `Client.new`.
+      def start_connection
+        @http.start unless @http.started?
+      rescue *TIMEOUT_ERRORS => e
+        raise TimeoutError, e.message
+      rescue *CONNECTION_ERRORS => e
+        raise ConnectionError, e.message
       end
 
       def set_body(req, body, content_type)

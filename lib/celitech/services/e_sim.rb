@@ -42,7 +42,7 @@ module Celitech
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       Validator.validate_string!(iccid, 'iccid', min_length: 18, max_length: 22)
       conn = resolve_connection(config)
-      response = conn.get("/esim/#{iccid}/device", {}, headers)
+      response = conn.get("/esim/#{Serializers::Params.simple(iccid, explode: false)}/device", {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetEsimDeviceOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
@@ -64,7 +64,7 @@ module Celitech
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       Validator.validate_string!(iccid, 'iccid', min_length: 18, max_length: 22)
       conn = resolve_connection(config)
-      response = conn.get("/esim/#{iccid}/history", {}, headers)
+      response = conn.get("/esim/#{Serializers::Params.simple(iccid, explode: false)}/history", {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetEsimHistoryOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
