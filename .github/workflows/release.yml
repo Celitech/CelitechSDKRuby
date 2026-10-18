@@ -9,9 +9,9 @@ on:
 
 env:
   # SDK identity is baked in at generation time, so the workflow never reads it from files at runtime.
-  SDK_VERSION: '2.0.7'
+  SDK_VERSION: '2.0.10'
   SDK_PACKAGE_NAME: 'celitech'
-  RELEASE_TAG: 'v2.0.7'
+  RELEASE_TAG: 'v2.0.10'
 
 jobs:
   release:
