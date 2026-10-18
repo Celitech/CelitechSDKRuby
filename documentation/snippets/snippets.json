@@ -31,6 +31,9 @@
     "/esim/{iccid}/history": {
       "get": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.e_sim.get_esim_history(iccid: '1111222233334444555000')\n\nputs response\n"
     },
+    "/esim/{iccid}/suspend": {
+      "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.e_sim.suspend_esim(iccid: '1111222233334444555000')\n\nputs response\n"
+    },
     "/iframe/token": {
       "post": "require 'celitech'\n\nsdk = Celitech::Client.new(client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET')\n\nresponse = sdk.i_frame.token\n\nputs response\n"
     },

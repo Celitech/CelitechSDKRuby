@@ -20,6 +20,14 @@ module Celitech
     end
   end
 
+  # The request never reached the server: connection refused, host unresolvable, socket closed by
+  # the peer, or a failed TLS handshake. The underlying transport exception is on `#cause`.
+  class ConnectionError < Error
+    def initialize(msg = 'Failed to connect')
+      super
+    end
+  end
+
   class ValidationError < Error
     attr_reader :field, :validation_message
 
@@ -30,16 +38,7 @@ module Celitech
     end
   end
 
-  class BadRequestError < APIError
-    attr_reader :data
-
-    def initialize(status, data, body, headers = {})
-      super(status, body, headers)
-      @data = data
-    end
-  end
-
-  class UnauthorizedError < APIError
+  class ErrorResponseError < APIError
     attr_reader :data
 
     def initialize(status, data, body, headers = {})

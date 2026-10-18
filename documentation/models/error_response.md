@@ -1,4 +1,4 @@
-# Unauthorized
+# ErrorResponse
 
 **Properties**
 
