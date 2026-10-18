@@ -86,3 +86,14 @@ Style/TrailingCommaInArguments:
 
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
+
+# The coercion dispatcher matches lambda patterns inside a `case`/`in` clause, where the stabby
+# `->(t) { ... }` form is the only valid one. Under the default `line_count_dependent` style RuboCop
+# rewrites a multi-line lambda to `lambda { |t| ... }`, which is a syntax error in a pattern-match
+# clause -- so it writes a Ruby file that does not parse, then reports its own corruption as a fatal
+# Lint/Syntax offence and fails the run.
+#
+# Pinned to `literal` rather than disabled so the cop stays active and keeps normalising lambdas the
+# other way; `literal` can only ever produce the form the pattern match needs.
+Style/Lambda:
+  EnforcedStyle: literal
