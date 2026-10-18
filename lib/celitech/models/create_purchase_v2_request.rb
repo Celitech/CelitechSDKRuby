@@ -145,6 +145,7 @@ module Celitech
 
       def validate!
         Validator.validate_number!(@quantity, 'quantity', min: 1, max: 5) unless @quantity.equal?(::Celitech::Models::UNSET)
+        Validator.validate_string!(@reference_id, 'referenceId', max_length: 255, pattern: /^[a-zA-Z0-9\-_.@+]+$/) unless @reference_id.equal?(::Celitech::Models::UNSET)
         @language&.validate! if !@language.equal?(::Celitech::Models::UNSET) && @language.respond_to?(:validate!)
       end
 

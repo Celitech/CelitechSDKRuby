@@ -27,12 +27,9 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
@@ -42,19 +39,16 @@ module Celitech
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       Validator.validate_string!(iccid, 'iccid', min_length: 18, max_length: 22)
       conn = resolve_connection(config)
-      response = conn.get("/esim/#{iccid}/device", {}, headers)
+      response = conn.get("/esim/#{Serializers::Params.simple(iccid, explode: false)}/device", {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetEsimDeviceOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
@@ -64,19 +58,40 @@ module Celitech
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       Validator.validate_string!(iccid, 'iccid', min_length: 18, max_length: 22)
       conn = resolve_connection(config)
-      response = conn.get("/esim/#{iccid}/history", {}, headers)
+      response = conn.get("/esim/#{Serializers::Params.simple(iccid, explode: false)}/history", {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetEsimHistoryOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
+      end
+      raise
+    end
+
+    # Suspend eSIM
+    def suspend_esim(iccid:, idempotency_key: nil, config: NO_OVERRIDE)
+      headers = config_headers(config).merge(
+        {
+          'Idempotency-Key' => idempotency_key,
+        }.compact,
+      ).merge(resolve_config(config)&.additional_headers || {})
+      Validator.validate_string!(iccid, 'iccid', min_length: 18, max_length: 22)
+      Validator.validate_string!(idempotency_key, 'Idempotency-Key', min_length: 1, max_length: 255)
+      conn = resolve_connection(config)
+      response = conn.post("/esim/#{Serializers::Params.simple(iccid, explode: false)}/suspend", nil, headers: headers)
+      return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
+      result = ::Celitech::Models::SuspendEsimOkResponse.from_hash(response.body)
+      result&.validate! if resolve_config(config)&.enable_response_validation
+      result
+    rescue APIError => e
+      case e.status
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end

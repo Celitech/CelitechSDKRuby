@@ -2,7 +2,7 @@
 
 module Celitech
   module Models
-    class BadRequest
+    class ErrorResponse
       include ::Celitech::Models::Serializable
       include ::Celitech::Models::OpenModel
 

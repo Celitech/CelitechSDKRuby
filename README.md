@@ -1,17 +1,42 @@
-# Celitech Ruby SDK 2.0.7
+# Celitech Ruby SDK 2.0.9
 
 Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
 ## Versions
 
-- API version: `2.0.7`
-- SDK version: `2.0.7`
+- API version: `2.0.9`
+- SDK version: `2.0.9`
 
 ## About the API
 
 Welcome to the CELITECH API documentation!
 
-Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:support@celitech.com) | [Blog](https://www.celitech.com/blog/)
+Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:devops@celitech.com) | [Blog](https://www.celitech.com/blog/)
+
+# Introduction
+
+This is the reference documentation and schemas for the CELITECH API and webhooks. For tutorials and other documentation please refer to the [CELITECH Documentation](https://docs.celitech.com).
+
+"Partners" refers to online service providers that use our eSIM API. Access levels include Gold, Platinum, and Diamond.
+
+## API
+
+The CELITECH API is designed for use by partner platforms, including both web and mobile applications. It's assumed all endpoint calls are initiated from the backend of an integrated platform.
+
+API URL: `https://api.celitech.net/v1`
+
+## Authentication & Authorization
+
+CELITECH API uses the OAuth 2.0 protocol for authentication and authorization.
+The endpoints are protected using client credentials flow which is based on a token exchange. The token has a defined life span (typically 1 hour), after which a new token must be obtained.
+
+To begin, obtain OAuth 2.0 client credentials ( **CLIENT_ID** & **CLIENT_SECRET** ) from the [CELITECH Dashboard](https://www.dashboard.celitech.com/). Then your client application requests an access token from the CELITECH Authorization Server, extracts a token from the response, and sends the token to the CELITECH API that you want to access.
+
+Security Scheme Type: `OAuth2`
+
+Flow type: `clientCredentials`
+
+Token URL: `https://auth.celitech.net/oauth2/token`
 
 ## Table of Contents
 
@@ -209,12 +234,12 @@ The SDK includes several models that represent the data structures used in API r
 | [GetEsimOkResponse](documentation/models/get_esim_ok_response.md)                                |             |
 | [GetEsimDeviceOkResponse](documentation/models/get_esim_device_ok_response.md)                   |             |
 | [GetEsimHistoryOkResponse](documentation/models/get_esim_history_ok_response.md)                 |             |
+| [SuspendEsimOkResponse](documentation/models/suspend_esim_ok_response.md)                        |             |
 | [TokenOkResponse](documentation/models/token_ok_response.md)                                     |             |
 | [OAuthTokenResponse](documentation/models/o_auth_token_response.md)                              |             |
 | [OAuthTokenRequest](documentation/models/o_auth_token_request.md)                                |             |
 | [GrantType](documentation/models/grant_type.md)                                                  |             |
-| [BadRequest](documentation/models/bad_request.md)                                                |             |
-| [Unauthorized](documentation/models/unauthorized.md)                                             |             |
+| [ErrorResponse](documentation/models/error_response.md)                                          |             |
 
 </details>
 

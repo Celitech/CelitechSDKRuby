@@ -2,7 +2,7 @@
 
 module Celitech
   module Models
-    class Unauthorized
+    class SuspendEsimOkResponse
       include ::Celitech::Models::Serializable
       include ::Celitech::Models::OpenModel
 
