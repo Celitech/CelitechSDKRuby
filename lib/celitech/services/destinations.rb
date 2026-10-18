@@ -22,12 +22,9 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end

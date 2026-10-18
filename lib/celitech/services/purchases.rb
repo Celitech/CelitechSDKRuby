@@ -12,8 +12,13 @@ module Celitech
     end
 
     # Create Purchase V2
-    def create_purchase_v2(body:, config: NO_OVERRIDE)
-      headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
+    def create_purchase_v2(body:, idempotency_key: nil, config: NO_OVERRIDE)
+      headers = config_headers(config).merge(
+        {
+          'Idempotency-Key' => idempotency_key,
+        }.compact,
+      ).merge(resolve_config(config)&.additional_headers || {})
+      Validator.validate_string!(idempotency_key, 'Idempotency-Key', min_length: 1, max_length: 255)
       body.validate! if body.respond_to?(:validate!)
       conn = resolve_connection(config)
       response = conn.post('/purchases/v2', body, headers: headers)
@@ -23,12 +28,9 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
@@ -70,20 +72,22 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
 
     # Create Purchase
     # @deprecated
-    def create_purchase(body:, config: NO_OVERRIDE)
-      headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
+    def create_purchase(body:, idempotency_key: nil, config: NO_OVERRIDE)
+      headers = config_headers(config).merge(
+        {
+          'Idempotency-Key' => idempotency_key,
+        }.compact,
+      ).merge(resolve_config(config)&.additional_headers || {})
+      Validator.validate_string!(idempotency_key, 'Idempotency-Key', min_length: 1, max_length: 255)
       body.validate! if body.respond_to?(:validate!)
       conn = resolve_connection(config)
       response = conn.post('/purchases', body, headers: headers)
@@ -93,19 +97,21 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
 
     # Top-up eSIM
-    def top_up_esim(body:, config: NO_OVERRIDE)
-      headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
+    def top_up_esim(body:, idempotency_key: nil, config: NO_OVERRIDE)
+      headers = config_headers(config).merge(
+        {
+          'Idempotency-Key' => idempotency_key,
+        }.compact,
+      ).merge(resolve_config(config)&.additional_headers || {})
+      Validator.validate_string!(idempotency_key, 'Idempotency-Key', min_length: 1, max_length: 255)
       body.validate! if body.respond_to?(:validate!)
       conn = resolve_connection(config)
       response = conn.post('/purchases/topup', body, headers: headers)
@@ -115,19 +121,21 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
 
     # Edit Purchase
-    def edit_purchase(body:, config: NO_OVERRIDE)
-      headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
+    def edit_purchase(body:, idempotency_key: nil, config: NO_OVERRIDE)
+      headers = config_headers(config).merge(
+        {
+          'Idempotency-Key' => idempotency_key,
+        }.compact,
+      ).merge(resolve_config(config)&.additional_headers || {})
+      Validator.validate_string!(idempotency_key, 'Idempotency-Key', min_length: 1, max_length: 255)
       body.validate! if body.respond_to?(:validate!)
       conn = resolve_connection(config)
       response = conn.post('/purchases/edit', body, headers: headers)
@@ -137,12 +145,9 @@ module Celitech
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
@@ -151,19 +156,17 @@ module Celitech
     def get_purchase_consumption(purchase_id:, config: NO_OVERRIDE)
       headers = config_headers(config).merge(resolve_config(config)&.additional_headers || {})
       conn = resolve_connection(config)
-      response = conn.get("/purchases/#{purchase_id}/consumption", {}, headers)
+      url = "/purchases/#{Serializers::Params.simple(purchase_id, explode: false)}/consumption"
+      response = conn.get(url, {}, headers)
       return response if !config.equal?(NO_OVERRIDE) && config&.return_raw
       result = ::Celitech::Models::GetPurchaseConsumptionOkResponse.from_hash(response.body)
       result&.validate! if resolve_config(config)&.enable_response_validation
       result
     rescue APIError => e
       case e.status
-      when 400
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::BadRequest.from_hash(e.body) : nil
-        raise ::Celitech::BadRequestError.new(e.status, parsed, e.body, e.headers)
-      when 401
-        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::Unauthorized.from_hash(e.body) : nil
-        raise ::Celitech::UnauthorizedError.new(e.status, parsed, e.body, e.headers)
+      when 400, 401, 409, 422, 503
+        parsed = e.body.is_a?(Hash) ? ::Celitech::Models::ErrorResponse.from_hash(e.body) : nil
+        raise ::Celitech::ErrorResponseError.new(e.status, parsed, e.body, e.headers)
       end
       raise
     end
