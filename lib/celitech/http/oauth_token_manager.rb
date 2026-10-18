@@ -16,16 +16,24 @@ module Celitech
     class OAuthTokenManager
       REFRESH_BUFFER_SECS = 5
 
-      def initialize(client_id:, client_secret:, token_url:)
+      # @param token_url [String] The token endpoint; a relative URL is joined to `base_url`.
+      # @param base_url [String, nil] The URL a relative `token_url` is resolved against.
+      def initialize(client_id:, client_secret:, token_url:, base_url: nil)
         @client_id     = client_id
         @client_secret = client_secret
         @token_url     = token_url
+        @base_url      = base_url
         @access_token  = nil
         @expires_at    = nil
         @mutex         = Mutex.new
       end
 
       attr_writer :client_id, :client_secret
+
+      # @return [Boolean] Whether both a client ID and a client secret are set.
+      def credentials?
+        [@client_id, @client_secret].none? { |value| value.nil? || value.to_s.empty? }
+      end
 
       def headers
         { 'Authorization' => "Bearer #{token}" }
@@ -49,8 +57,15 @@ module Celitech
         @access_token.nil? || (@expires_at && Time.now + REFRESH_BUFFER_SECS >= @expires_at)
       end
 
+      def token_uri
+        url = @token_url.to_s
+        return URI.parse(url) if @base_url.nil? || url.match?(%r{\A[a-z][a-z0-9+.-]*://}i)
+
+        URI.parse("#{@base_url.to_s.chomp('/')}/#{url.delete_prefix('/')}")
+      end
+
       def fetch_token
-        uri = URI.parse(@token_url)
+        uri = token_uri
         req = Net::HTTP::Post.new(uri.request_uri)
         req.set_form_data(
           grant_type: 'client_credentials',

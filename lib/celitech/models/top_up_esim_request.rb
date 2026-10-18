@@ -135,6 +135,7 @@ module Celitech
 
       def validate!
         Validator.validate_string!(@iccid, 'iccid', min_length: 18, max_length: 22) unless @iccid.equal?(::Celitech::Models::UNSET)
+        Validator.validate_string!(@reference_id, 'referenceId', max_length: 255, pattern: /^[a-zA-Z0-9\-_.@+]+$/) unless @reference_id.equal?(::Celitech::Models::UNSET)
       end
 
       def open_model_extras
