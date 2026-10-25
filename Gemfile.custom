@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+# Custom Gemfile configuration, loaded by the main Gemfile when present. Add gems or groups here,
+# and list this file in .fernignore so regeneration keeps your changes.
+
+# group :test, :development do
+#   gem 'custom-gem', '~> 2.0'
+# end

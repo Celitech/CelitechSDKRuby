@@ -14,7 +14,7 @@ module Celitech
     # Note: token refresh blocks all threads calling `headers` until the HTTP request
     # completes. This is intentional — only one fetch occurs and others reuse the result.
     class OAuthTokenManager
-      REFRESH_BUFFER_SECS = 5
+      REFRESH_BUFFER_SECS = 30
 
       # @param token_url [String] The token endpoint; a relative URL is joined to `base_url`.
       # @param base_url [String, nil] The URL a relative `token_url` is resolved against.
